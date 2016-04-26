@@ -2,11 +2,16 @@
 #ifndef COMPRESSOR_H
 #define COMPRESSOR_H
 
+#include <stdio.h>
+#include <stdlib.h>
+
 /* defines */
-#define MIN_LINE 1024 /* minimum line chars*/
-#define FILE_MODE_READ "r" /* file mode for reading */
-#define FILE_MODE_APPEND "a" /* file mode for appending */
-#define MAX_ARGS 4 /* maximum amount of args in cmd*/
+#define MIN_LINE 1024 				/* minimum line chars*/
+#define FILE_MODE_READ "r" 			/* file mode for reading */
+#define FILE_MODE_APPEND "a" 		/* file mode for appending */
+#define MAX_ARGS 4 					/* maximum amount of args in cmd*/
+#define BYTE_SIZE 64					/* amount of bits in a byte */ 
+#define BASE_BINARY_CHAR '0'		/* character used as base binary*/
 
 
 /* enumerators and constants */
@@ -34,8 +39,12 @@ typedef struct arguments {
 
 
 /* function prototypes  compressLib*/
-Boolean compressLine( Line * line);
-Boolean decompressLine( Line * line);
+Boolean lineCompress( char *);
+Boolean lineDecompress( char *);
+char * readFile(FILE *);
+char * decToBin(int);
+
+
 
 /* function prototypes  arguments*/
 void argumentsGet(const int, const char **, Arguments *);

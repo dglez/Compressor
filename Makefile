@@ -6,10 +6,11 @@ EXE = compressor
 HEADER = compressor.h
 OBJS = compressor.o compressLib.o
 SOURCE = compressor.c compressLib.c
+LIBS = -lc
 
 
 $(EXE):	$(OBJS)
-		$(CC) $(FLAGS) $(SOURCE) -o $(EXE)
+		$(CC) $(FLAGS) $(SOURCE) -o $(EXE) $(LIBS)
 
 compressor.o: $(HEADER)
 compressLib.o: $(HEADER)
