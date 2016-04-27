@@ -10,7 +10,7 @@
 #define FILE_MODE_READ "r" 			/* file mode for reading */
 #define FILE_MODE_APPEND "a" 		/* file mode for appending */
 #define MAX_ARGS 4 					/* maximum amount of args in cmd*/
-#define BYTE_SIZE 64					/* amount of bits in a byte */ 
+#define BYTE_SIZE 8					/* amount of bits in a byte */ 
 #define BASE_BINARY_CHAR '0'		/* character used as base binary*/
 
 
@@ -24,9 +24,13 @@ static const char * FILE_OUTPUT = "output.dog"; /*default output file */
 /* typedefs */
 
 typedef enum bool {FALSE, TRUE} Boolean;
-typedef struct line {
-	char content[MIN_LINE];
-} Line;
+
+
+typedef struct array{
+	char * data;
+	long arraySize;
+	
+}Array;
 
 typedef struct arguments {
 	const char * inputFile;
@@ -39,10 +43,11 @@ typedef struct arguments {
 
 
 /* function prototypes  compressLib*/
-Boolean lineCompress( char *);
+Boolean lineCompress( Array *);
 Boolean lineDecompress( char *);
-char * readFile(FILE *);
+Array readFile(FILE *);
 char * decToBin(int);
+char * binaryStream(Array *);
 
 
 

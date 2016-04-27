@@ -32,44 +32,93 @@ void argumentsGet(const int argc, const char ** argv, Arguments * arg){
 ./compress  	//assuming FILE_OUTPUT
 */
 }
-char * readFile(FILE * fIn){
 
-	long input_size = 0;
 
-	char * temp;
 
-	fseek(fIn, 0, SEEK_END);	// move * from  start to end
-	input_size = ftell(fIn);	// return how much * was moved 
-	rewind(fIn);				// move * to position 0 again
+
+
+
+
+
+Array readFile(FILE * fIn){
+
+	Array contents;
+
+	fseek(fIn, 0, SEEK_END);			// move * from  start to end
+	contents.arraySize = ftell(fIn);	// return how much * was moved 
+	rewind(fIn);						// move * to position 0 again
 
 	/* allocate memory size of file */
-	temp = (char *)malloc(input_size * sizeof(char));
+	contents.data = (char *)malloc(contents.arraySize * sizeof(char));
 	/* read file into an array*/
-	fread(temp, sizeof(char), input_size, fIn);
-	temp[input_size] = 0;
+	fread(contents.data, sizeof(char), contents.arraySize, fIn);
+	contents.data[contents.arraySize] = 0;
 
-	printf("%s\n", temp);
-	return temp;
+	return contents;
 }
 
 
 
-Boolean lineCompress( char * contents){
 
 
-	return TRUE;
 
 
+
+Boolean lineCompress( Array * bi ){
+
+
+
+
+
+
+
+return TRUE;
 }
+
+
+char * binaryStream(Array * contents){
+
+	int streamSize = (contents->arraySize * BYTE_SIZE) + 1;
+	char * bitStream;
+	bitStream = (char *)calloc(	sizeof(char), streamSize);
+
+	int indexData = 0;
+	int indexStream = 0;
+	char * word;
+
+	for ( indexData = 0; indexData < contents->arraySize; indexData++){
+
+		word = decToBin((int)contents->data[indexData]);
+
+		for (indexStream = 0; indexStream < BYTE_SIZE; indexStream++){
+			bitStream[indexStream + (indexData * BYTE_SIZE) ] = word[indexStream];
+		}
+		printf("%s\n", word );
+
+	}
+
+	printf("%s\n", bitStream);
+
+
+	return bitStream;
+}
+
+
+
+
+
+
+
+
 
 /**/
 char * decToBin(int charCode) {	
 	
 	char * result;
 	result = (char *)calloc(sizeof(char), BYTE_SIZE + 1); 
-	int i = BYTE_SIZE - 1;
-	result[BYTE_SIZE] = 0;
+	
 
+	int i = BYTE_SIZE - 1;
 	do {		
 		result[i--] = charCode % 2 + BASE_BINARY_CHAR;
 		charCode /= 2;

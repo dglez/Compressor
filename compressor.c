@@ -6,8 +6,8 @@ int main(int argc, char const *argv[]){
 	Arguments arg;
 	FILE * fIn;
 	FILE * fOut;
-	Line line;	
-	char * contents;
+	Array contents;
+	Array compressed;
 
 
 	argumentsGet(argc, argv, &arg);
@@ -23,6 +23,23 @@ int main(int argc, char const *argv[]){
 		fIn = fopen(arg.inputFile, FILE_MODE_READ);
 		contents = readFile(fIn);
 		fclose(fIn);
+
+
+
+
+
+
+		printf("%s\n%ld\n",contents.data, contents.arraySize );
+
+		printf("%s\n",binaryStream(&contents));
+		
+
+
+
+
+
+
+
 
 		
 
