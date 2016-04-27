@@ -1,5 +1,6 @@
 
 #include "compressor.h"
+#include <string.h>
 
 
 
@@ -64,42 +65,28 @@ Array readFile(FILE * fIn){
 
 
 
-Boolean lineCompress( Array * bi ){
+void streamCompress(Array * contents){
+
+	Array bitStream;
+	bitStream = binaryStream(contents);
+	printf("%s\n",bitStream.data);
 
 
-
-
-
-
-
-return TRUE;
 }
 
 
-char * binaryStream(Array * contents){
+Array binaryStream(Array * contents){
 
-	int streamSize = (contents->arraySize * BYTE_SIZE) + 1;
-	char * bitStream;
-	bitStream = (char *)calloc(	sizeof(char), streamSize);
+	Array bitStream;
+	bitStream.arraySize = (contents->arraySize * BYTE_SIZE) + 1;
+	bitStream.data = (char *)calloc(sizeof(char), bitStream.arraySize);	
 
-	int indexData = 0;
-	int indexStream = 0;
+	int indexData = 0;	
 	char * word;
-
 	for ( indexData = 0; indexData < contents->arraySize; indexData++){
-
 		word = decToBin((int)contents->data[indexData]);
-
-		for (indexStream = 0; indexStream < BYTE_SIZE; indexStream++){
-			bitStream[indexStream + (indexData * BYTE_SIZE) ] = word[indexStream];
-		}
-		printf("%s\n", word );
-
+		strcat(bitStream.data, word);		
 	}
-
-	printf("%s\n", bitStream);
-
-
 	return bitStream;
 }
 

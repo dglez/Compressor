@@ -24,27 +24,7 @@ int main(int argc, char const *argv[]){
 		contents = readFile(fIn);
 		fclose(fIn);
 
-
-
-
-
-
-		printf("%s\n%ld\n",contents.data, contents.arraySize );
-
-		printf("%s\n",binaryStream(&contents));
-		
-
-
-
-
-
-
-
-
-		
-
-
-
+		streamCompress(&contents);
 
 		
 		// process line 

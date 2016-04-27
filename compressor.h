@@ -43,11 +43,11 @@ typedef struct arguments {
 
 
 /* function prototypes  compressLib*/
-Boolean lineCompress( Array *);
+void streamCompress( Array *);
 Boolean lineDecompress( char *);
 Array readFile(FILE *);
 char * decToBin(int);
-char * binaryStream(Array *);
+Array binaryStream(Array *);
 
 
 
