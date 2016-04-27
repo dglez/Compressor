@@ -38,9 +38,6 @@ void argumentsGet(const int argc, const char ** argv, Arguments * arg){
 
 
 
-
-
-
 Array readFile(FILE * fIn){
 
 	Array contents;
@@ -70,9 +67,11 @@ void streamCompress(Array * contents){
 	Array bitStream;
 	bitStream = binaryStream(contents);
 	printf("%s\n",bitStream.data);
-
-
 }
+
+
+
+
 
 
 Array binaryStream(Array * contents){
