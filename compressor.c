@@ -7,7 +7,9 @@ int main(int argc, char const *argv[]){
 	FILE * fIn;
 	FILE * fOut;
 	Array contents;
-	Array compressed;
+	Array compressedStream;
+	Array compressedContent;
+	Array DecompressedStream;
 
 
 	argumentsGet(argc, argv, &arg);
@@ -16,7 +18,7 @@ int main(int argc, char const *argv[]){
 
 		// TODO:Check for errors and for input/output
 		
-		fOut = fopen(arg.outputFile, FILE_MODE_APPEND);	
+		
 
 
 		// read file
@@ -24,13 +26,24 @@ int main(int argc, char const *argv[]){
 		contents = readFile(fIn);
 		fclose(fIn);
 
-		streamCompress(&contents);
+		// compressed
+		compressedStream = StrToComrpessedBin(&contents);
+		compressedContent = BinStreamTocharStr(&compressedStream);
+		DecompressedStream = StrToDecomrpessedBin(&compressedContent);
 
 		
-		// process line 
-		// Free memory 
+
+
 		// write processed line to compressed file
-		// end loop
+		fOut = fopen(arg.outputFile, FILE_MODE_APPEND);	
+		writeFile(&compressedContent, fOut);
+		fclose(fOut);
+
+		
+		// Free memory 
+
+		
+		
 
 	}else{
 
