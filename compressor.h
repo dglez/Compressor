@@ -20,7 +20,7 @@
 #define FLAG "11111111"				/* not compressed character flag */
 #define PAD_STR "0"
 
-
+	
 
 
 /* enumerators and constants */
@@ -68,7 +68,7 @@ void trimSpaces(char * , const char * );
 
 /* function prototypes  DecompressLib.c */
 Array StrToDecomrpessedBin(Array * );
-char * decToBin(unsigned int);
+char * decToBin(unsigned char);
 
 
 

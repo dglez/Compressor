@@ -19,7 +19,7 @@ int main(int argc, char const *argv[]){
 		// TODO:Check for errors and for input/output
 		
 		
-
+		
 
 		// read file
 		fIn = fopen(arg.inputFile, FILE_MODE_READ);
@@ -31,7 +31,7 @@ int main(int argc, char const *argv[]){
 		compressedContent = BinStreamTocharStr(&compressedStream);
 		DecompressedStream = StrToDecomrpessedBin(&compressedContent);
 
-		
+		printf("%s\n", DecompressedStream.data);
 
 
 		// write processed line to compressed file
