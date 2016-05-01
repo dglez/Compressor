@@ -9,7 +9,8 @@ int main(int argc, char const *argv[]){
 	Array contents;
 	Array compressedStream;
 	Array compressedContent;
-	Array DecompressedStream;
+	Array decompressedStream;
+	Array decompressedContent;
 
 
 	argumentsGet(argc, argv, &arg);
@@ -28,10 +29,18 @@ int main(int argc, char const *argv[]){
 
 		// compressed
 		compressedStream = StrToComrpessedBin(&contents);
+		printf("%s\n",compressedStream.data );
 		compressedContent = BinStreamTocharStr(&compressedStream);
-		DecompressedStream = StrToDecomrpessedBin(&compressedContent);
+		decompressedStream = StrToDecomrpessedBin(&compressedContent);
+		printf("%s\n",decompressedStream.data );
+		printf("\n");
 
-		printf("%s\n", DecompressedStream.data);
+		decompressedContent = binToDecompressedContent(&decompressedStream);
+
+		printf("%s\n",decompressedContent.data );
+
+
+		
 
 
 		// write processed line to compressed file

@@ -81,10 +81,10 @@ char * getWord(char * stream, int wordStart, int wordSize){
 	int i;
 	int j = 0;
 	for (i = wordStart ; i < wordStart + wordSize; i++){
-			word[j] = stream[i];
-			j++;
-		}
-		word[wordSize] = 0;
+		word[j] = stream[i];
+		j++;
+	}
+	word[wordSize] = 0;
 
 	return word;	
 }
@@ -108,36 +108,41 @@ Array StrToComrpessedBin(Array * contents){
 	}
 	free(word);
 
-	strcat(bitStream.data, FLAG);
+	strcat(bitStream.data, FLAG_STR);
 	bitStream.arraySize = strlen(bitStream.data);
 	printf("%zu\n", bitStream.arraySize );
-	char * pad;
-	pad = padding(bitStream.arraySize % SIZE_BYTE);
-	strcat(bitStream.data, pad);
-	free(pad);
-	bitStream.arraySize = strlen(bitStream.data);
-	printf("%zu\n", bitStream.arraySize );
-
 	
-	char * newBitStream = realloc(bitStream.data, bitStream.arraySize * sizeof(char));
+	padding(&bitStream);
+	
+	bitStream.arraySize = strlen(bitStream.data);
+	printf("%zu\n", bitStream.arraySize );	
+	char * newBitStream;
+	newBitStream = realloc(bitStream.data, bitStream.arraySize * sizeof(char));
 	bitStream.data = newBitStream;
-
-	printf("%s\n",bitStream.data );
 
 	return bitStream;
 }
 
 
-char * padding(int pad){
-	char * word;
-	word = (char *)calloc( sizeof(char), pad + 1);
 
-	int i;
-	for (i = 0; i < pad; ++i){
-		strcat(word, "0");
-	}
 
-	return word;
+void padding(Array * bitStream){
+	
+	int pad = bitStream->arraySize % SIZE_BYTE;
+
+	if (pad != 0 ){
+		char * word;
+		word = (char *)calloc( sizeof(char), pad + 1);
+
+		pad = SIZE_BYTE - pad;
+
+		int i;
+		for (i = 0; i < pad; ++i){
+			strcat(word, "0");
+		}
+		strcat(bitStream->data, word);	
+		free(word);
+	}	
 }
 
 
@@ -154,18 +159,20 @@ Array BinStreamTocharStr(Array * bitStream){
 	contents.data = (char *)calloc(sizeof(char), contents.arraySize);	
 	
 	int indexData = 0;		
-	char chrDec;
+	unsigned char chrDec;
 	char * word;
 	long count = 0;
 	for ( indexData = 0; indexData < bitStream->arraySize; indexData += SIZE_BYTE){
+		
 		word = getWord(bitStream->data, indexData, SIZE_BYTE);
-		chrDec = (char)binToDec(word);
-		sprintf(contents.data, "%s%c", contents.data, chrDec );
-		// strcat(contents.data, chrDec);	
+		chrDec = (unsigned char)binToDec(word);
+		printf("%d ", (int)chrDec );
+		sprintf(contents.data, "%s%c", contents.data, chrDec );	
 		free(word);	
 		count++;
 	}
 
+	printf("\n\n");
 	contents.arraySize = strlen(contents.data);
 	char * newContents = realloc(contents.data, sizeof(char) * (contents.arraySize + 1));
 	contents.data = newContents;
@@ -177,18 +184,16 @@ Array BinStreamTocharStr(Array * bitStream){
 
 
 
-/*
-
-	
 
 
-*/
+
+
+
 char * decToBinCompressed(int charCode) {	
 	
 	
 	Boolean compress = ((charCode > ALPHA_LOWER_BOUND && 
-						charCode < ALPHA_UPPER_BOUND) || 
-						charCode == ALPHA_SPACE);	
+		charCode < ALPHA_UPPER_BOUND) );	
 	char * result;
 	char * bitStream;
 	bitStream = (char *)calloc(sizeof(char), SIZE_BYTE + 1);
@@ -206,7 +211,7 @@ char * decToBinCompressed(int charCode) {
 		result = getWord(bitStream, 3, SIZE_BYTE);
 	}else{
 		result = (char *)calloc(sizeof(char), SIZE_DOUBLE_BYTE + 1);
-		strcat(result,FLAG);
+		strcat(result,FLAG_STR);
 		strcat(result,bitStream);
 	}
 
@@ -235,7 +240,7 @@ int binToDec(char * binCode){
 		power--;
 	}
 
-	return result;
+	return (result == 0)? 255 : result;
 }
 
 
